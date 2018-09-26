@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>Storekeeper</title>
+    </head>
+    <script src="Game.js"></script>
+    <style>
+        .EmptyCell
+        {
+            width: 10vh;
+            height: 10vh;
+            border: 3px solid black;
+        }
+        .StoreCell
+        {
+            width: 10vh;
+            height: 10vh;
+            border: 3px solid green;
+            text-align: right;
+            vertical-align: top;
+        }
+        #ExitCell
+        {
+            width: 10vh;
+            height: 10vh;
+            border: 3px solid blue;
+            text-align: right;
+            vertical-align: top;
+        }
+        #ExitCellExample
+        {
+            width: 10vh;
+            height: 10vh;
+            border: 3px solid blue;
+            text-align: center;
+        }
+
+        #StoreCellExample
+        {
+            width: 10vh;
+            height: 10vh;
+            border: 3px solid green;
+            text-align: center;
+        }
+        #PlayerExample
+        {
+            height: 7vh;
+            width: 7vh;
+            margin-left: 1vh;
+            border-radius: 50%;
+            background-color: red;
+            border: 3px solid red;
+        }
+        #PlayerCell
+        {
+            text-align: center;
+        }
+
+        .Settings
+        {
+            width: 35vh;
+        }
+        #Player
+        {
+            top: 28vh;
+            left: 4.5vh;
+            height: 5vh;
+            width: 5vh;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            border: 3px solid red;
+        }
+    </style>
+    <body>
+        <script>
+            let game;
+
+            function handler(event)
+            {
+                let element = document.getElementById("Player");
+                game.Move(event.keyCode, element, document);
+                
+            }
+
+            function Start()
+            {
+                game = new Game();
+                let element = document.getElementById("GamePlace");
+                element.focus();
+                element.innerHTML = game.CreateGame(document.querySelector('#Width').value, document.querySelector('#Height').value,
+                                                    document.querySelector('#StoresCount').value, document.querySelector('#MaxBoxesInStore').value,
+                                                    document.querySelector('#MaxBoxesAtPlayer').value);
+                addEventListener("keydown", handler);
+            }
+
+            function Stop()
+            {
+                let element = document.getElementById("GamePlace");
+                element.innerHTML = null;
+                removeEventListener("keydown", handler);
+            }   
+
+        </script>   
+            <input id="Width" class="Settings" type="number" placeholder="Field width" /><br />
+            <input id="Height" class="Settings" type="number" placeholder="Field height" /><br /> 
+            <input id="StoresCount" class="Settings" type="number" placeholder="Count of stores" /><br /> 
+            <input id="MaxBoxesInStore" class="Settings" type="number" placeholder="Boxes maximum count in store" /><br /> 
+            <input id="MaxBoxesAtPlayer" class="Settings"  type="number" placeholder="Boxes maximum count at player" /><br />             
+            <input type="submit" id="StartButton" onfocus="blur()" value="Play" onclick="Start()"/>
+            <input type="submit" value="Stop game" onclick="Stop()"/>
+            <table style="margin-left: 45vh; top: 5vh; position: absolute;">
+                <tr>
+                    <td id="ExitCellExample">Exit</td>
+                    <td id="StoreCellExample">Store</td>
+                    <td id="PlayerCell"><div id="PlayerExample"></div>Player</td>
+                </tr>
+            </table>
+            <div id="GamePlace"></div>
+    </body>
+</html>
